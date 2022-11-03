@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import MapMain from './components/maps/MapMain'
 
 function App() {
   return (
-    <>
-    </>
+    <MapMain />
   );
 }
 
