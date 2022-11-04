@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const StyledMap = styled.div`width: 80vw; height: 40vw;`
 
 export default function CoupleMap() {
-  const mapRef = useRef<HTMLElement | null | any>(null)
+  const mapRef = useRef<naver.maps.Map | null>(null)
 
   useEffect(() => {
     const { naver } = window
@@ -21,8 +21,6 @@ export default function CoupleMap() {
   }, [])
 
   return (
-    <div>
-      <StyledMap id="map" />
-    </div>
+    <StyledMap id="map" />
   );
 }
