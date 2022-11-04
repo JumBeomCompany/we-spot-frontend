@@ -1,9 +1,9 @@
 import React from 'react'
-import MapMain from './components/maps/MapMain'
+import CoupleMap from './components/maps/CoupleMap';
 
 function App() {
   return (
-    <MapMain />
+    <CoupleMap />
   );
 }
 
