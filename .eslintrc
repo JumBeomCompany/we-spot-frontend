@@ -8,7 +8,10 @@
   "rules": {
     "react/jsx-filename-extension": [0],
     "import/prefer-default-export": [0],
-    "import/extensions": [0]
+    "import/extensions": [0],
+    "semi": [0],
+    "object-shorthand": [0],
+    "no-undef": [0]
   },
   "env": {
     "browser": true
