@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
+import * as ReactDOMServer from 'react-dom/server';
 import styled from 'styled-components'
+import CoupleInfoWindow from './CoupleInfoWindow';
 
 const StyledMap = styled.div`width: 80vw; height: 40vw;`
 
@@ -17,7 +19,6 @@ export default function CoupleMap() {
     }
 
     const map = new naver.maps.Map('map', mapOptions)
-    const contentElements = '<div class="infowindow-container"><b>테스트 중입니다</b></div>';
     const markers:naver.maps.Marker | any = []
     const infowindows:naver.maps.InfoWindow | any = []
     const listeners:any = []
@@ -29,7 +30,7 @@ export default function CoupleMap() {
         map: map,
       }))
       infowindows.push(new naver.maps.InfoWindow({
-        content: contentElements,
+        content: ReactDOMServer.renderToString(<CoupleInfoWindow />),
       }))
     })
 
