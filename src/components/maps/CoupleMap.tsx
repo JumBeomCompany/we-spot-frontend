@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 const StyledMap = styled.div`width: 80vw; height: 40vw;`
 
 export default function CoupleMap() {
-  const mapRef = useRef<naver.maps.Map | null>(null)
-
   useEffect(() => {
     const { naver } = window
     const mapOptions = {
@@ -13,7 +11,7 @@ export default function CoupleMap() {
       zoom: 15,
     }
 
-    mapRef.current = new naver.maps.Map('map', mapOptions)
+    const map = new naver.maps.Map('map', mapOptions)
 
     return () => {
       // todo destroy
