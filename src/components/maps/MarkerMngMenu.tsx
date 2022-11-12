@@ -1,8 +1,11 @@
-import React from 'react';
+import React from 'react'
+import styled from 'styled-components'
+
+const StyledMenuContainer = styled.div`position: absolute; bottom: 30px; right: 20px;`
 
 function MarkerMngMenu() {
   return (
-    <div>
+    <StyledMenuContainer>
       <span>
         <button type="button">추가</button>
       </span>
@@ -12,7 +15,7 @@ function MarkerMngMenu() {
       <span>
         <button type="button">삭제</button>
       </span>
-    </div>
+    </StyledMenuContainer>
   );
 }
 
