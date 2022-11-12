@@ -1,9 +1,13 @@
 import React from 'react'
-import CoupleMap from './components/maps/CoupleMap';
+import MapMain from './components/maps/MapMain';
 
 function App() {
   return (
-    <CoupleMap />
+    <div>
+      <main>
+        <MapMain />
+      </main>
+    </div>
   );
 }
 

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CoupleMap from './CoupleMap';
 import MarkerMngMenu from './MarkerMngMenu';
 
 function MapMain() {
+  const [isClickedMarker, setIsClickedMarker] = useState(false)
+
   return (
-    <>
-      <CoupleMap />
-      <MarkerMngMenu />
-    </>
+    <div>
+      <CoupleMap setIsClickedMarker={setIsClickedMarker} />
+      {isClickedMarker && <MarkerMngMenu />}
+    </div>
   )
 }
 
