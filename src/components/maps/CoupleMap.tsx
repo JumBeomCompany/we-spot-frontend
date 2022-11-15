@@ -3,9 +3,9 @@ import * as ReactDOMServer from 'react-dom/server';
 import styled from 'styled-components'
 import CoupleInfoWindow from './CoupleInfoWindow';
 
-const StyledMap = styled.div`width: 80vw; height: 40vw;`
+const StyledMap = styled.div`width: 100vw; height: 100vh;`
 
-export default function CoupleMap() {
+export default function CoupleMap({ setIsClickedMarker }: any) {
   const sampleData = [
     { latitude: 37.48619, longitude: 126.925621 },
     { latitude: 37.47919, longitude: 126.923621 },
@@ -38,8 +38,10 @@ export default function CoupleMap() {
       listeners.push(naver.maps.Event.addListener(marker, 'click', (e) => {
         if (infowindows[index].getMap()) {
           infowindows[index].close();
+          setIsClickedMarker(false)
         } else {
           infowindows[index].open(map, marker);
+          setIsClickedMarker(true)
         }
       }))
     })
