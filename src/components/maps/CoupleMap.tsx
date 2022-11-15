@@ -1,16 +1,18 @@
+import axios from 'axios';
 import React, { useEffect } from 'react'
 import * as ReactDOMServer from 'react-dom/server';
+import { useQuery } from 'react-query';
 import styled from 'styled-components'
 import CoupleInfoWindow from './CoupleInfoWindow';
 
 const StyledMap = styled.div`width: 100vw; height: 100vh;`
 
 export default function CoupleMap({ setIsClickedMarker }: any) {
-  const sampleData = [
-    { latitude: 37.48619, longitude: 126.925621 },
-    { latitude: 37.47919, longitude: 126.923621 },
-    { latitude: 37.48319, longitude: 126.926921 },
-  ]
+  const { data, isLoading, isSuccess } = useQuery<any>('getMarker', async () => {
+    const response = await axios.get('http://13.124.139.218:8080/api/v1/markers/1')
+    return response.data;
+  }, {})
+
   useEffect(() => {
     const { naver } = window
     const mapOptions = {
@@ -23,7 +25,7 @@ export default function CoupleMap({ setIsClickedMarker }: any) {
     const infowindows:naver.maps.InfoWindow | any = []
     const listeners:any = []
 
-    sampleData.forEach((item) => {
+    data?.data?.forEach((item:any) => {
       markers.push(new naver.maps.Marker({
         // position: new naver.maps.LatLng(data.latitude, data.longitude),
         position: new naver.maps.LatLng(item.latitude, item.longitude),
@@ -51,7 +53,7 @@ export default function CoupleMap({ setIsClickedMarker }: any) {
         naver.maps.Event.removeListener(listener)
       })
     }
-  }, [])
+  }, [data])
 
   return (
     <StyledMap id="map" />
