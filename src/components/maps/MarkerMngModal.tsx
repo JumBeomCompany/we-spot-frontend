@@ -5,14 +5,6 @@ import {
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
-interface Input {
-  latitude: number,
-  longitude: number,
-  userId: number,
-  feedTitle: string,
-  feedContent: string,
-}
-
 export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModalOpen }:any) {
   const style = {
     position: 'absolute' as const,
@@ -26,18 +18,13 @@ export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModa
     p: 4,
   };
 
-  const [inputData, setInputData] = useState<Input>({
-    latitude: clickedPosition.latitude,
-    longitude: clickedPosition.longitude,
-    userId: 1,
-    feedTitle: '',
-    feedContent: '',
-  })
+  const [feedTitle, setFeedTitle] = useState('')
+  const [feedContent, setFeedContent] = useState('')
 
   const addMutation = useMutation('addMarker', async (param:any) => {
     const response = await axios.post('http://13.124.139.218:8080/api/v1/markers/1', {
-      latitude: param.latitude,
-      longitude: param.longitude,
+      latitude: clickedPosition.latitude,
+      longitude: clickedPosition.longitude,
       userId: 1,
       feedTitle: param.feedTitle,
       feedContent: param.feedContent,
@@ -46,7 +33,7 @@ export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModa
   }, {})
 
   const saveData = () => {
-    addMutation.mutate(inputData)
+    addMutation.mutate(({ feedTitle, feedContent }), {})
   }
 
   const handleClose = () => {
@@ -68,21 +55,16 @@ export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModa
           <form>
             <input
               type="text"
-              title="검색"
+              value={feedTitle}
               onChange={(e) => {
-                setInputData({
-                  ...inputData,
-                  feedTitle: e.target.value,
-                })
+                setFeedTitle(e.target.value)
               }}
             />
             <input
               type="text"
+              value={feedContent}
               onChange={(e) => {
-                setInputData({
-                  ...inputData,
-                  feedContent: e.target.value,
-                })
+                setFeedContent(e.target.value)
               }}
             />
             <Button variant="contained" onClick={saveData}>추가</Button>
