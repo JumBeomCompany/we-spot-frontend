@@ -9,7 +9,7 @@ const StyledMap = styled.div`width: 100vw; height: 100vh;`
 
 export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setClickedPosition }: any) {
   const { data, isLoading, isSuccess } = useQuery<any>('getMarker', async () => {
-    const response = await axios.get('http://13.124.139.218:8080/api/v1/markers/1')
+    const response = await axios.get('http://3.37.26.147:8080/api/v1/markers/1')
     return response.data;
   }, {})
 
