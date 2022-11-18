@@ -33,17 +33,21 @@ export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModa
   }, {})
 
   const saveData = () => {
-    addMutation.mutate(({ feedTitle, feedContent }), {})
-  }
-
-  const handleClose = () => {
-    setIsModalOpen(false)
+    if (!addMutation.isLoading) {
+      addMutation.mutate(({ feedTitle, feedContent }), {
+        onError: () => {
+          setIsModalOpen(false)
+        },
+      })
+    } else {
+      alert('요청중입니다.')
+    }
   }
 
   return (
     <Modal
       open={isModalOpen}
-      onClose={handleClose}
+      onClose={() => setIsModalOpen(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
