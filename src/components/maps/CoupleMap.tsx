@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as ReactDOMServer from 'react-dom/server';
 import { useQuery } from 'react-query';
 import styled from 'styled-components'
@@ -15,55 +15,64 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
     staleTime: 30000,
   })
 
+  const mapElement = useRef<naver.maps.Map | null>(null)
+
   useEffect(() => {
-    const { naver } = window
     const mapOptions = {
       center: new naver.maps.LatLng(37.48619, 126.925621),
       zoom: 15,
     }
 
-    const map = new naver.maps.Map('map', mapOptions)
+    mapElement.current = new naver.maps.Map('map', mapOptions)
+  }, [])
+
+  useEffect(() => {
+    // console.log('data', data)
+    const { naver } = window
     const markers:naver.maps.Marker | any = []
     const infowindows:naver.maps.InfoWindow | any = []
     const listeners:any = []
+    let mapClickListener:any = null
 
-    const currentMarker = new naver.maps.Marker({
-      position: new naver.maps.LatLng(0, 0),
-      map: map,
-    })
+    if (mapElement.current) {
+      const currentMarker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(0, 0),
+        map: mapElement.current,
+      })
 
-    data?.data?.forEach((item:any) => {
-      markers.push(new naver.maps.Marker({
-        // position: new naver.maps.LatLng(data.latitude, data.longitude),
-        position: new naver.maps.LatLng(item.latitude, item.longitude),
-        map: map,
-      }))
-      infowindows.push(new naver.maps.InfoWindow({
-        content: ReactDOMServer.renderToString(<CoupleInfoWindow />),
-      }))
-    })
+      data?.data?.forEach((item:any) => {
+        if (!mapElement.current) return
+        markers.push(new naver.maps.Marker({
+          position: new naver.maps.LatLng(item.latitude, item.longitude),
+          map: mapElement.current,
+        }))
+        infowindows.push(new naver.maps.InfoWindow({
+          content: ReactDOMServer.renderToString(<CoupleInfoWindow />),
+        }))
+      })
 
-    markers.forEach((marker:any, index: any) => {
-      listeners.push(naver.maps.Event.addListener(marker, 'click', (e) => {
-        if (infowindows[index].getMap()) {
-          infowindows[index].close();
-          setIsMarkerMngMenuOpen(false)
-        } else {
-          infowindows[index].open(map, marker);
-          setIsMarkerMngMenuOpen(true)
-        }
-        handleClickMap('map')
-        currentMarker.setPosition(new naver.maps.LatLng(0, 0))
-      }))
-    })
+      markers.forEach((marker:any, index: any) => {
+        listeners.push(naver.maps.Event.addListener(marker, 'click', (e) => {
+          if (infowindows[index].getMap()) {
+            infowindows[index].close();
+            setIsMarkerMngMenuOpen(false)
+          } else {
+            infowindows[index].open(mapElement.current, marker);
+            setIsMarkerMngMenuOpen(true)
+          }
+          handleClickMap('map')
+          currentMarker.setPosition(new naver.maps.LatLng(0, 0))
+        }))
+      })
 
-    // 지도 특정 위치 클릭 시 해당 위치에 마커 노출
-    const mapClickListener = naver.maps.Event.addListener(map, 'click', (e) => {
-      currentMarker.setPosition(e.coord)
-      handleClickMap('marker')
-      setIsMarkerMngMenuOpen(true)
-      setClickedPosition({ latitude: e.coord.y, longitude: e.coord.x })
-    })
+      // 지도 특정 위치 클릭 시 해당 위치에 마커 노출
+      mapClickListener = naver.maps.Event.addListener(mapElement.current, 'click', (e) => {
+        currentMarker.setPosition(e.coord)
+        handleClickMap('marker')
+        setIsMarkerMngMenuOpen(true)
+        setClickedPosition({ latitude: e.coord.y, longitude: e.coord.x })
+      })
+    }
 
     return () => {
       listeners.forEach((listener: any) => {
