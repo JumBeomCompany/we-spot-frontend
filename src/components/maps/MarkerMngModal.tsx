@@ -22,7 +22,7 @@ export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModa
   const [feedContent, setFeedContent] = useState('')
 
   const addMutation = useMutation('addMarker', async (param:any) => {
-    const response = await axios.post('http://3.37.26.147:8080/api/v1/markers/1', {
+    const response = await axios.post('http://3.37.26.147:8080/api/v1/marker', {
       latitude: clickedPosition.latitude,
       longitude: clickedPosition.longitude,
       userId: 1,
