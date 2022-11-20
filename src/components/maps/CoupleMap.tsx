@@ -27,7 +27,6 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
   }, [])
 
   useEffect(() => {
-    // console.log('data', data)
     const { naver } = window
     const markers:naver.maps.Marker | any = []
     const infowindows:naver.maps.InfoWindow | any = []
@@ -40,6 +39,7 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
         map: mapElement.current,
       })
 
+      // 마커, infowindow 생성
       data?.data?.forEach((item:any) => {
         if (!mapElement.current) return
         markers.push(new naver.maps.Marker({
@@ -51,6 +51,7 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
         }))
       })
 
+      // 마커에 이벤트리스너 달기
       markers.forEach((marker:any, index: any) => {
         listeners.push(naver.maps.Event.addListener(marker, 'click', (e) => {
           if (infowindows[index].getMap()) {
