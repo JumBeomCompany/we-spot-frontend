@@ -11,7 +11,9 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
   const { data, isLoading, isSuccess } = useQuery<any>('getMarker', async () => {
     const response = await axios.get('http://3.37.26.147:8080/api/v1/markers?userId=1')
     return response.data;
-  }, {})
+  }, {
+    staleTime: 30000,
+  })
 
   useEffect(() => {
     const { naver } = window
