@@ -1,20 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useRef } from 'react'
 import * as ReactDOMServer from 'react-dom/server';
-import { useQuery } from 'react-query';
 import styled from 'styled-components'
 import CoupleInfoWindow from './CoupleInfoWindow';
 
 const StyledMap = styled.div`width: 100vw; height: 100vh;`
 
-export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setClickedPosition }: any) {
-  const { data, isLoading, isSuccess } = useQuery<any>('getMarker', async () => {
-    const response = await axios.get('http://3.37.26.147:8080/api/v1/markers?userId=1')
-    return response.data;
-  }, {
-    staleTime: 30000,
-  })
-
+export default function CoupleMap({
+  markerData, handleClickMap, setIsMarkerMngMenuOpen, setClickedPosition,
+}: any) {
   const mapElement = useRef<naver.maps.Map | null>(null)
 
   useEffect(() => {
@@ -40,7 +33,7 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
       })
 
       // 마커, infowindow 생성
-      data?.data?.forEach((item:any) => {
+      markerData?.data?.forEach((item:any) => {
         if (!mapElement.current) return
         markers.push(new naver.maps.Marker({
           position: new naver.maps.LatLng(item.latitude, item.longitude),
@@ -81,7 +74,7 @@ export default function CoupleMap({ handleClickMap, setIsMarkerMngMenuOpen, setC
       })
       naver.maps.Event.removeListener(mapClickListener)
     }
-  }, [data])
+  }, [markerData])
 
   return (
     <StyledMap id="map" />
