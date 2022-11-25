@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CoupleMap from './CoupleMap';
 import MarkerMngMenu from './MarkerMngMenu';
-import MarkerMngModal from './MarkerMngModal';
+import AddMarkerMngModal from './AddMarkerModal';
 
 function MapMain() {
   const [isMarkerMngMenuOpen, setIsMarkerMngMenuOpen] = useState(false)
@@ -19,7 +19,7 @@ function MapMain() {
     <div>
       <CoupleMap handleClickMap={handleClickMap} setIsMarkerMngMenuOpen={setIsMarkerMngMenuOpen} setClickedPosition={setClickedPosition} />
       {isMarkerMngMenuOpen && <MarkerMngMenu setIsModalOpen={setIsModalOpen} MarkerMngMenuType={MarkerMngMenuType} />}
-      {isModalOpen && <MarkerMngModal clickedPosition={clickedPosition} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
+      {isModalOpen && <AddMarkerMngModal clickedPosition={clickedPosition} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
     </div>
   )
 }

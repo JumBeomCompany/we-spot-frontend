@@ -5,7 +5,7 @@ import {
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
-export default function MarkerMngModal({ clickedPosition, isModalOpen, setIsModalOpen }:any) {
+export default function AddMarkerMngModal({ clickedPosition, isModalOpen, setIsModalOpen }:any) {
   const style = {
     position: 'absolute' as const,
     top: '50%',
