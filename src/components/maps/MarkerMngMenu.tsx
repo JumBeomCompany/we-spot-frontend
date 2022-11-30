@@ -6,14 +6,14 @@ import DeleteIcon from '@mui/icons-material/Delete'
 const StyledMenuContainer = styled(Stack)`position: absolute; width: 100%; bottom: 30px; display: flex; justify-content: center;`
 const StyledButton = styled(Button)`margin-left: 10px;`
 
-function MarkerMngMenu({ setIsModalOpen, MarkerMngMenuType }:any) {
+function MarkerMngMenu({ setIsModalOpen, setIsEditModalOpen, MarkerMngMenuType }:any) {
   return (
     <Zoom in>
       <StyledMenuContainer spacing={2} direction="row">
         {MarkerMngMenuType === 'marker'
           && <StyledButton variant="contained" onClick={() => { setIsModalOpen(true) }}>추가</StyledButton>}
         {MarkerMngMenuType === 'map'
-          && <StyledButton variant="contained">수정</StyledButton>}
+          && <StyledButton variant="contained" onClick={() => { setIsEditModalOpen(true) }}>수정</StyledButton>}
         {MarkerMngMenuType === 'map'
           && <StyledButton variant="contained" endIcon={<DeleteIcon />}>삭제</StyledButton>}
       </StyledMenuContainer>
