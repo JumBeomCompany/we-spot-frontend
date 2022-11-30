@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal, Box, Typography, Button,
 } from '@mui/material';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
-export default function EditMarkerModal({ clickedPosition, isEditModalOpen, setIsEditModalOpen }:any) {
+export default function EditMarkerModal({
+  markerData, clickedPosition, isEditModalOpen, setIsEditModalOpen,
+}:any) {
   const style = {
     position: 'absolute' as const,
     top: '50%',
@@ -21,13 +23,16 @@ export default function EditMarkerModal({ clickedPosition, isEditModalOpen, setI
   const [feedTitle, setFeedTitle] = useState('')
   const [feedContent, setFeedContent] = useState('')
 
+  useEffect(() => {
+    setFeedTitle(markerData.feedTitle)
+    setFeedContent(markerData.feedContent)
+  }, [markerData])
+
   const addMutation = useMutation('addMarker', async (param:any) => {
-    const response = await axios.post('', {
-      latitude: clickedPosition.latitude,
-      longitude: clickedPosition.longitude,
+    const response = await axios.patch(`http://3.37.26.147:8080/api/v1/marker/${clickedPosition?.id}`, {
       userId: 1,
-      feedTitle: param.feedTitle,
-      feedContent: param.feedContent,
+      feedTitle: feedTitle,
+      feedContent: feedContent,
     })
     return response.data;
   }, {})
@@ -61,14 +66,14 @@ export default function EditMarkerModal({ clickedPosition, isEditModalOpen, setI
               type="text"
               value={feedTitle}
               onChange={(e) => {
-                setFeedTitle(e.target.value)
+                setFeedTitle(e.target.value || '')
               }}
             />
             <input
               type="text"
               value={feedContent}
               onChange={(e) => {
-                setFeedContent(e.target.value)
+                setFeedContent(e.target.value || '')
               }}
             />
             <Button variant="contained" onClick={saveData}>추가</Button>

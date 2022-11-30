@@ -54,7 +54,7 @@ export default function CoupleMap({
             infowindows[index].open(mapElement.current, marker);
             setIsMarkerMngMenuOpen(true)
           }
-          handleClickMap('map')
+          handleClickMap('map', marker)
           currentMarker.setPosition(new naver.maps.LatLng(0, 0))
         }))
       })
