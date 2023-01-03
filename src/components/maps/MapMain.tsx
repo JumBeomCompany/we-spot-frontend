@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
+import styled from 'styled-components';
 import CoupleMap from './CoupleMap';
 import MarkerMngMenu from './MarkerMngMenu';
 import AddMarkerMngModal from './AddMarkerModal';
 import EditMarkerModal from './EditMarkerModal';
+
+const MapContainer = styled.div`
+  display: absolute;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+`
 
 function MapMain() {
   const [isMarkerMngMenuOpen, setIsMarkerMngMenuOpen] = useState(false)
@@ -27,12 +35,12 @@ function MapMain() {
   }
 
   return (
-    <div>
+    <MapContainer>
       <CoupleMap markerData={data} handleClickMap={handleClickMap} setIsMarkerMngMenuOpen={setIsMarkerMngMenuOpen} setClickedPosition={setClickedPosition} />
       {isMarkerMngMenuOpen && <MarkerMngMenu setIsModalOpen={setIsModalOpen} setIsEditModalOpen={setIsEditModalOpen} MarkerMngMenuType={MarkerMngMenuType} />}
       {isModalOpen && <AddMarkerMngModal clickedPosition={clickedPosition} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />}
       {isEditModalOpen && <EditMarkerModal clickedPosition={clickedPosition} isEditModalOpen={isEditModalOpen} setIsEditModalOpen={setIsEditModalOpen} />}
-    </div>
+    </MapContainer>
   )
 }
 
