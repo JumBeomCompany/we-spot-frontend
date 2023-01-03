@@ -1,6 +1,6 @@
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import React from 'react';
-import RestoreIcon from '@mui/icons-material/Restore';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
@@ -19,7 +19,7 @@ export default function Footer() {
       >
         <BottomNavigationAction label="커플맵" icon={<LocationOnIcon />} />
         <BottomNavigationAction label="피드" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="내정보" icon={<SupervisedUserCircleIcon />} />
       </BottomNavigation>
     </Box>
   );
