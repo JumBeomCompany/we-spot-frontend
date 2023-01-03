@@ -1,34 +1,18 @@
-/* html {width:100%; height:100%; margin:0; padding:0; }  */
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html, body {
   height: 100%;
   width: 100%;
   margin: 0;
 }
 
-body {width:100%; height:100%; margin:0; padding:0;}
-
-body {
-  display: flex;
-  overflow: hidden;
-}
-
 header {
-  /* position: fixed; */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: gainsboro;
-}
-
-main {
-  /* height: 80vh; */
+  height: 70px;
 }
 
 footer {
-  height: 10vh;
-  background-color: blue;
+  height: 70px;
 }
-
-.bottom_menu { position: fixed; bottom: 0px; left: 0px; width: 100%; height: 50px; z-index:100; border-top: 1px solid black; background-color: white; display: flex; justify-content: space-around;}
-.bottom_menu > div { width: 20%; height: 100%; text-align: center; padding-top: 13px; }

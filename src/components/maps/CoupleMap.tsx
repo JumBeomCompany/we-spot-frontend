@@ -3,7 +3,7 @@ import * as ReactDOMServer from 'react-dom/server';
 import styled from 'styled-components'
 import CoupleInfoWindow from './CoupleInfoWindow';
 
-const StyledMap = styled.div`width: 100vw; height: 100vh;`
+const StyledMap = styled.div`height: calc(100vh - 140px);`
 
 export default function CoupleMap({
   markerData, handleClickMap, setIsMarkerMngMenuOpen, setClickedPosition,
