@@ -14,7 +14,7 @@ const BottomNavItem = styled.div`
   text-align: center;
 `
 
-export default function Footer() {
+export default function BottomNav() {
   return (
     <BottomNavContainer>
       <BottomNavItem>
