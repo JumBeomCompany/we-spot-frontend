@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import headerLogoImg from '../../assets/images/header-img.png';
+import headerLogoImg from '../../../public/imgaes/header-img.png';
 
 const HeaderContainer = styled.header`
   height: 70px;
