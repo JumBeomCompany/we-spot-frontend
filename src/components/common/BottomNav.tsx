@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 const BottomNavContainer = styled.div`
   display: flex;
@@ -18,13 +19,13 @@ export default function BottomNav() {
   return (
     <BottomNavContainer>
       <BottomNavItem>
-        <div>커플맵</div>
+        <Link to='/'>지도</Link>
       </BottomNavItem> 
       <BottomNavItem>
-        <div>피드</div>
+        <Link to='/feed'>피드</Link>
       </BottomNavItem>
       <BottomNavItem>
-        <div>내정보</div>
+        <Link to='/'>내정보</Link>
       </BottomNavItem>
     </BottomNavContainer>
   );
