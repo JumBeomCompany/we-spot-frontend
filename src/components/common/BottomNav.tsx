@@ -3,11 +3,13 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
 const BottomNavContainer = styled.div`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 70px;
   width: 100%;
+  bottom: 0;
 `;
 
 const BottomNavItem = styled.div`
