@@ -4,8 +4,10 @@ import {
 } from '@mui/material';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import { useAtom } from 'jotai';
+import { isAddMarkerModalOpenAtom } from '../../atom/index';
 
-export default function AddMarkerMngModal({ clickedPosition, isModalOpen, setIsModalOpen }:any) {
+export default function AddMarkerMngModal({ clickedPosition }:any) {
   const style = {
     position: 'absolute' as const,
     top: '50%',
@@ -17,6 +19,8 @@ export default function AddMarkerMngModal({ clickedPosition, isModalOpen, setIsM
     boxShadow: 24,
     p: 4,
   };
+
+  const [isAddMarkerModalOpen, setIsAddMarkerModalOpen] = useAtom(isAddMarkerModalOpenAtom);
 
   const [feedTitle, setFeedTitle] = useState('')
   const [feedContent, setFeedContent] = useState('')
@@ -36,7 +40,7 @@ export default function AddMarkerMngModal({ clickedPosition, isModalOpen, setIsM
     if (!addMutation.isLoading) {
       addMutation.mutate(({ feedTitle, feedContent }), {
         onError: () => {
-          setIsModalOpen(false)
+          setIsAddMarkerModalOpen(false)
         },
       })
     } else {
@@ -46,8 +50,8 @@ export default function AddMarkerMngModal({ clickedPosition, isModalOpen, setIsM
 
   return (
     <Modal
-      open={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+      open={isAddMarkerModalOpen}
+      onClose={() => setIsAddMarkerModalOpen(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

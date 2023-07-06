@@ -4,9 +4,11 @@ import {
 } from '@mui/material';
 import { useMutation } from 'react-query';
 import axios from 'axios';
+import { useAtom } from 'jotai';
+import { isEditMarkerModalOpenAtom, clickedPositionAtom } from '../../atom/index'
 
 export default function EditMarkerModal({
-  markerData, clickedPosition, isEditModalOpen, setIsEditModalOpen,
+  markerData
 }:any) {
   const style = {
     position: 'absolute' as const,
@@ -20,6 +22,9 @@ export default function EditMarkerModal({
     p: 4,
   };
 
+  const [isEditMarkerModalOpen, setisEditMarkerModalOpenAtom] = useAtom(isEditMarkerModalOpenAtom);
+  const [clickedPosition] = useAtom(clickedPositionAtom);
+
   const [feedTitle, setFeedTitle] = useState('')
   const [feedContent, setFeedContent] = useState('')
 
@@ -29,19 +34,19 @@ export default function EditMarkerModal({
   }, [markerData])
 
   const addMutation = useMutation('addMarker', async (param:any) => {
-    const response = await axios.patch(`http://3.37.26.147:8080/api/v1/marker/${clickedPosition?.id}`, {
-      userId: 1,
-      feedTitle: feedTitle,
-      feedContent: feedContent,
-    })
-    return response.data;
+    // const response = await axios.patch(`http://3.37.26.147:8080/api/v1/marker/${clickedPosition?.id}`, {
+    //   userId: 1,
+    //   feedTitle: feedTitle,
+    //   feedContent: feedContent,
+    // })
+    // return response.data;
   }, {})
 
   const saveData = () => {
     if (!addMutation.isLoading) {
       addMutation.mutate(({ feedTitle, feedContent }), {
         onError: () => {
-          setIsEditModalOpen(false)
+          setisEditMarkerModalOpenAtom(false)
         },
       })
     } else {
@@ -51,8 +56,8 @@ export default function EditMarkerModal({
 
   return (
     <Modal
-      open={isEditModalOpen}
-      onClose={() => setIsEditModalOpen(false)}
+      open={isEditMarkerModalOpen}
+      onClose={() => setisEditMarkerModalOpenAtom(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

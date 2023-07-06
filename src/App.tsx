@@ -1,4 +1,5 @@
 import React from 'react'
+import { Provider } from 'jotai';
 import styled from 'styled-components';
 import BottomNav from './components/common/BottomNav';
 import Header from './components/common/Header';
@@ -11,11 +12,13 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
+    <Provider>
+      <AppContainer>
       <Header />
       <MapMain />
       <BottomNav />
-    </AppContainer>
+      </AppContainer>
+    </Provider>
   );
 }
 

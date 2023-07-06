@@ -2,12 +2,17 @@ import React, { useEffect, useRef } from 'react'
 import * as ReactDOMServer from 'react-dom/server';
 import styled from 'styled-components'
 import CoupleInfoWindow from './CoupleInfoWindow';
+import { useAtom } from 'jotai';
+import { clickedPositionAtom, isMarkerMngMenuOpenAtom } from '../../atom/index';
 
 const StyledMap = styled.div`height: calc(100vh - 140px);`
 
 export default function CoupleMap({
-  markerData, handleClickMap, setIsMarkerMngMenuOpen, setClickedPosition,
+  markerData, handleClickMap,
 }: any) {
+  const [, setIsMarkerMngMenuOpenAtom] = useAtom(isMarkerMngMenuOpenAtom);
+  const [, setClickedPositionAtom] = useAtom(clickedPositionAtom);
+
   const mapElement = useRef<naver.maps.Map | null>(null)
 
   useEffect(() => {
@@ -49,10 +54,10 @@ export default function CoupleMap({
         listeners.push(naver.maps.Event.addListener(marker, 'click', (e) => {
           if (infowindows[index].getMap()) {
             infowindows[index].close();
-            setIsMarkerMngMenuOpen(false)
+            setIsMarkerMngMenuOpenAtom(false)
           } else {
             infowindows[index].open(mapElement.current, marker);
-            setIsMarkerMngMenuOpen(true)
+            setIsMarkerMngMenuOpenAtom(true)
           }
           handleClickMap('map', marker)
           currentMarker.setPosition(new naver.maps.LatLng(0, 0))
@@ -63,8 +68,8 @@ export default function CoupleMap({
       mapClickListener = naver.maps.Event.addListener(mapElement.current, 'click', (e) => {
         currentMarker.setPosition(e.coord)
         handleClickMap('marker')
-        setIsMarkerMngMenuOpen(true)
-        setClickedPosition({ latitude: e.coord.y, longitude: e.coord.x })
+        setIsMarkerMngMenuOpenAtom(true)
+        setClickedPositionAtom({ latitude: e.coord.y, longitude: e.coord.x })
       })
     }
 
