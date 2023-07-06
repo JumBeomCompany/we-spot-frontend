@@ -6,13 +6,14 @@ import FeedImg from '../../../public/imgaes/feed.png';
 import MyInfoImg from '../../../public/imgaes/myInfo.png';
 
 const BottomNavContainer = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 70px;
   width: 100%;
   bottom: 0;
+  background: white;
 `;
 
 const MapButton = styled.div`
